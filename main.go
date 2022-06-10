@@ -1,25 +1,23 @@
-package ma
+package main
 
 import (
-	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 )
 
-type Data struct {
-	Id    int    //`json:"id"`
-	Value string //`json:"value"`
-}
+func DataHandler1(w http.ResponseWriter, r *http.Request) {
+	// data := r.URL.Path[len("/data/"):]
+	// if data == "1" {
 
-func DataHandler(w http.ResponseWriter, r *http.Request) {
-	m := Data{1, "one"}
-	b, _ := json.Marshal(m)
+	// } else {
+
+	// }
+
+	// data from ":8080/data/1"
+	// b :=
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(200)
-	w.Write(b)
-	data := r.URL.Path[len("/data/"):]
-	fmt.Println(data)
+	// w.Write(b)
 }
 
 func main() {
