@@ -3,26 +3,20 @@ package main
 import (
 	"log"
 	"net/http"
+
+	"github.com/digicert/health"
+	"github.com/pittsCourt/Server2/handlers"
 )
 
-func DataHandler1(w http.ResponseWriter, r *http.Request) {
-	// data := r.URL.Path[len("/data/"):]
-	// if data == "1" {
-
-	// } else {
-
-	// }
-
-	// data from ":8080/data/1"
-	// b :=
-	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	w.WriteHeader(200)
-	// w.Write(b)
-}
-
 func main() {
-	// Handling the /data/1 as a function
-	http.HandleFunc("/data/1", DataHandler)
+	health.SetLogLevel("debug")
+	health.SetDebug(true)
+
+	// Handling the /data/ paths
+	http.HandleFunc("/data/", handlers.DataHandler)
+
+	// Handling the /data/2 path
+	// http.HandleFunc("/data/2", handlers.DataHandler2)
 
 	log.Println("Listening on port :80")
 
