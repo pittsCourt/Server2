@@ -5,26 +5,33 @@ import (
 	"log"
 	"net/http"
 
+	"gopkg.in/yaml.v3"
+
 	"github.com/digicert/health"
 )
 
-// func configVariables() {
-// 	configFile, err := ioutil.ReadFile("config.yaml")
-// 	if err != nil {
+type ConfigData struct {
+	Port   string `yaml:"portNumber"`
+	Server string `yaml:"serverName"`
+}
 
-// 		log.Fatal(err)
-// 	}
+var config ConfigData
 
-// 	err2 := yaml.Unmarshal(configFile)
+func LoadConfigVariable() {
+	configFile, err := ioutil.ReadFile("config.yaml")
+	if err != nil {
+		health.Fatal("This is the error: %v", err)
+	}
 
-// 	if err2 != nil {
+	config = ConfigData{}
 
-// 		log.Fatal(err2)
-// 	}
+	err = yaml.Unmarshal(configFile, &config)
+	if err != nil {
+		health.Fatal("cannot unmarshal data: %v", err)
+	}
 
-// 	health.Debug("%s", err2)
-
-// }
+	health.Debug("%v", config)
+}
 
 func getData(sFull string) []byte {
 	// Get response from Server found at sFull
@@ -56,8 +63,7 @@ func DataHandler(w http.ResponseWriter, r *http.Request) {
 	sStr := string(s)
 	health.Debug("%s is now a string", sStr)
 	// Append sSTring to localhost url
-	sFull := "http://server1:8080/data/" + sStr
-	// sFull := "http://localhost:8080/data/" + sStr
+	sFull := "http://" + config.Server + config.Port + "/data/" + sStr
 
 	// Call get data function with path to data
 	body := getData(sFull)

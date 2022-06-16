@@ -9,8 +9,10 @@ import (
 )
 
 func main() {
-	health.SetLogLevel("debug")
+	health.SetLogLevel("info")
 	health.SetDebug(true)
+
+	handlers.LoadConfigVariable()
 
 	// Handling the /data/ paths
 	http.HandleFunc("/data/", handlers.DataHandler)
