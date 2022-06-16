@@ -8,6 +8,24 @@ import (
 	"github.com/digicert/health"
 )
 
+// func configVariables() {
+// 	configFile, err := ioutil.ReadFile("config.yaml")
+// 	if err != nil {
+
+// 		log.Fatal(err)
+// 	}
+
+// 	err2 := yaml.Unmarshal(configFile)
+
+// 	if err2 != nil {
+
+// 		log.Fatal(err2)
+// 	}
+
+// 	health.Debug("%s", err2)
+
+// }
+
 func getData(sFull string) []byte {
 	// Get response from Server found at sFull
 	resp, err := http.Get(sFull)
@@ -38,7 +56,8 @@ func DataHandler(w http.ResponseWriter, r *http.Request) {
 	sStr := string(s)
 	health.Debug("%s is now a string", sStr)
 	// Append sSTring to localhost url
-	sFull := "http://localhost:8080/data/" + sStr
+	sFull := "http://server1:8080/data/" + sStr
+	// sFull := "http://localhost:8080/data/" + sStr
 
 	// Call get data function with path to data
 	body := getData(sFull)
@@ -49,20 +68,24 @@ func DataHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(body)
 }
 
-// func DataHandler2(w http.ResponseWriter, r *http.Request) {
-// 	resp, err := http.Get("http://localhost:8080/data/2")
-// 	if err != nil {
-// 		log.Fatalln(err)
-// 	}
+/*
+No longer used, but here for reference
 
-// 	//We Read the response body on the line below.
-// 	body, err := ioutil.ReadAll(resp.Body)
-// 	if err != nil {
-// 		log.Fatalln(err)
-// 	}
+func DataHandler2(w http.ResponseWriter, r *http.Request) {
+	resp, err := http.Get("http://localhost:8080/data/2")
+	if err != nil {
+		log.Fatalln(err)
+	}
 
-// 	// Write data to page
-// 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-// 	w.WriteHeader(200)
-// 	w.Write(body)
-// }
+	//We Read the response body on the line below.
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	// Write data to page
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	w.WriteHeader(200)
+	w.Write(body)
+}
+*/
