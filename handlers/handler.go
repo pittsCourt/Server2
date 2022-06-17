@@ -5,9 +5,8 @@ import (
 	"log"
 	"net/http"
 
-	"gopkg.in/yaml.v3"
-
 	"github.com/digicert/health"
+	"gopkg.in/yaml.v3"
 )
 
 type ConfigData struct {
