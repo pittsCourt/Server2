@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"io/ioutil"
-	"log"
 	"net/http"
 
 	"github.com/digicert/health"
@@ -19,14 +18,14 @@ var config ConfigData
 func LoadConfigVariable() {
 	configFile, err := ioutil.ReadFile("config.yaml")
 	if err != nil {
-		health.Fatal("This is the error: %v", err)
+		health.Error("This is the error: %v", err)
 	}
 
 	config = ConfigData{}
 
 	err = yaml.Unmarshal(configFile, &config)
 	if err != nil {
-		health.Fatal("cannot unmarshal data: %v", err)
+		health.Error("cannot unmarshal data: %v", err)
 	}
 
 	health.Debug("%v", config)
@@ -36,13 +35,13 @@ func getData(sFull string) []byte {
 	// Get response from Server found at sFull
 	resp, err := http.Get(sFull)
 	if err != nil {
-		health.Fatal("This is the error: %v", err)
+		health.Error("This is the error: %v", err)
 	}
 
 	// Gather response from Server and return it to DataHandler
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatalln(err)
+		health.Error(err.Error())
 	}
 
 	return body
